@@ -1,7 +1,11 @@
 # Bazel build outputs and local Bazel state
+/bazel-bin
 /bazel-bin/
+/bazel-out
 /bazel-out/
+/bazel-testlogs
 /bazel-testlogs/
+/bazel-ConcurrencyLabs
 /bazel-*/
 
 # Java build products
