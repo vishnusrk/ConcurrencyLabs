@@ -1,0 +1,28 @@
+module(
+    name = "concurrency_labs",
+    version = "0.1.0",
+)
+
+# Official Java Rules
+bazel_dep(name = "rules_java", version = "7.11.1")
+
+# Rules for JS/TS/React tooling
+bazel_dep(name = "aspect_rules_js", version = "2.1.0")
+bazel_dep(name = "rules_nodejs", version = "6.3.0")
+bazel_dep(name = "aspect_rules_ts", version = "3.3.1")
+
+# Configure Node.js toolchain
+node = use_extension("@rules_nodejs//nodejs:extensions.bzl", "node")
+node.toolchain(node_version = "20.11.0")
+
+# Configure NPM packages
+npm = use_extension("@aspect_rules_js//npm:extensions.bzl", "npm")
+npm.npm_translate_lock(
+    name = "npm",
+    pnpm_lock = "//ui:pnpm-lock.yaml",
+    verify_node_modules_ignored = "//:.bazelignore",
+)
+use_repo(npm, "npm")
+
+ts_config = use_extension("@aspect_rules_ts//ts:extensions.bzl", "ext")
+use_repo(ts_config, "npm_typescript")
