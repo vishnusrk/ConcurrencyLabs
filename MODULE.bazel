@@ -3,8 +3,18 @@ module(
     version = "0.1.0",
 )
 
-# Official Java Rules
+# Official Java Rules and JVM Dependencies
 bazel_dep(name = "rules_java", version = "7.11.1")
+bazel_dep(name = "rules_jvm_external", version = "6.0")
+
+maven = use_extension("@rules_jvm_external//:extensions.bzl", "maven")
+maven.install(
+    name = "junit_maven",
+    artifacts = [
+        "junit:junit:4.13.2",
+    ],
+)
+use_repo(maven, "junit_maven")
 
 # Rules for JS/TS/React tooling
 bazel_dep(name = "aspect_rules_js", version = "2.1.0")
